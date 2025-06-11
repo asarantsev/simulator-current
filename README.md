@@ -10,3 +10,6 @@ response_page.html FRONTEND
 annual.xlsx MAIN DATA FILE
 
 international.xlsx ANOTHER DATA FILE
+
+Updated, June 10: 
+flask-appK.py and main_pageK.html for the same K are new versions
