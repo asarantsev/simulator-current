@@ -2,12 +2,18 @@
 UPDATE: June 11
 
 flask_app6.py BACKEND
+
 main_page5.html FRONTEND (home page)
+
 response_page.html FRONTEND (output page)
+
 overall.xlsx MAIN DATA FILE
+
 validation.py FITTING MODEL
 
-Current version of the simulator, May 30
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Old version of the simulator, May 30
 
 flask_app.py BACKEND
 
