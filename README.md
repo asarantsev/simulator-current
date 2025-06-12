@@ -1,5 +1,5 @@
 # simulator-current
-UPDATE: June 11
+UPDATE: June 11, https://my-finance.org/2025/06/10/new-simulator/
 
 flask_app6.py BACKEND
 
