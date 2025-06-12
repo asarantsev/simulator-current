@@ -106,9 +106,6 @@ def simWealth(initVol, initRate, initialW, initialFlow, growthFlow, nYears, bond
     flow = initialFlow * np.exp(np.array(range(nYears)) * np.log(1 +  growthFlow))
 
     # this is the main function connecting wealth to returns and flow
-    # we stop simulations for this path if wealth drops below zero
-    # this is the only place when we use loop over all simulations
-    # if only flow is negative, so there are withdrawals which can make bankrupt
     if initialFlow < 0:
         for t in range(nYears):
             # main equation connecting returns, flow, wealth
@@ -156,8 +153,6 @@ def allTicks(horizon):
 # need to print this in the legend to the right of the main picture
 # to remind the investor about their inputs
 # the arguments are the same as for 'simWealth' except initial volatility
-# which is here always assumed to be current volatility
-# for 2024, the last year available as of this writing
 def setupText(initialWealth, initialFlow, growthFlow, timeHorizon, bondShare0, bondShare1, intlShare):
 
     # This part is text description of flow (contributions or withdrawals)
@@ -223,7 +218,6 @@ def setupText(initialWealth, initialFlow, growthFlow, timeHorizon, bondShare0, b
 # and write a legend for each path, and the overall legend
 # including setup in the above function and the results
 # the arguments are the same as for the function 'simWealth'
-# except initial volatility = current volatility for 2024
 def output(initialW, initialFlow, growthFlow, timeHorizon, bondShare0, bondShare1, intlShare):
 
     # simulate wealth process of a portfolio
@@ -332,6 +326,5 @@ def compute():
 
     # Draw the PNG picture with simulation results and graphs
     output(initialWealth, initialFlow, growthFlow, nYears, bond0, bond1, intl)
-
     # the response page after clicking Submit, with this PNG picture
     return render_template('response_page.html')
