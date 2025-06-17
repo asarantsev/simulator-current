@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Simplified Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <font face = "arial">
+    <h2 align = "center"> Simplified Simulator <a href = "https://my-finance.org/2025/06/10/new-simulator/">Explained </a> &nbsp;
+     </h2>
+    <div> <font size = "+2"> <form action="{{ url_for('computeEasy')}}" method="POST">
+        <p align = "center">
+            <label for = 'risk'> Your Behavior </label>
+            <select name = 'risk' style = "height:30px;font-size:25px;background-color: HoneyDew;" required>
+                <option value = "-1"> Conservative </option>
+                <option value = "0"> Moderate </option>
+                <option value = "+1"> Assertive </option>
+            </select>
+        </p>
+        <p align = "center">
+            <label for = 'goal'> Your Goal </label>
+            <select name = 'goal' style = "height:30px;font-size:25px;background-color: HoneyDew;" required>
+                <option value = '0'> Lump-Sum Investing </option>
+                <option value = '1'> Regular Savings </option>
+                <option value = '-1'> Regular Spending </option>
+                <option value = '2'> Preserving Wealth </option>
+            </select>
+        </p>
+        <p align = "center">
+            <label for = 'amount'> Amount </label>
+                <input type="number" name="amount" value = "1000" style="height:30px;width:150px;font-size:25px;background-color: HoneyDew;" min = "0" step = "0.1" required>
+        </p>
+        <p align = "center">
+            <label for="years"> Time in Years </label>
+                <input type="number" name="years" value = "20" style = "height:30px;width:120px;font-size:25px; background-color: HoneyDew;" min = "0" max = "50" required>
+        </p>
+        <p align = "center">
+            <input type="submit" style="height:40px;font-size:24pt;background-color: HoneyDew;" value = "Compute">
+        </p>
+        </font> </form> </div>
+        <h2 align = "center">
+            <a href = "{{url_for('mainPage')}}"> Main Simulator </a>
+        </h2>
+</body>
+</html>
