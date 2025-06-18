@@ -16,8 +16,8 @@ np.random.seed(0)
 current_dir = os.path.abspath(os.path.dirname(__file__))
 outputName = os.path.join(current_dir, 'static', 'wealth.png')
 
-currVol = (10.37/19.4645) * 18.8202 # Volatility VIX, last year daily average
-currRate = 5.8716 # BAA rate, last year daily average
+currVol = (10.37/19.4645) * 18.66 # Volatility VIX, June 2024 - May 2025 daily close average
+currRate = 6.29 # BAA rate, May 2025 daily close average
 
 DIM = 5 # number of white noise dimensions: independent identically distributed
 NSIMS = 10000 # number of simulations
@@ -142,6 +142,8 @@ def form(x):
     if 10**9 <= x: # 24.7B not 24694M
         return f"{10**(-9)*x:.1f}B"
 
+# This function is necessary to make the same K, M, B for y-axis formatting
+# for the plot of wealth evolution
 def tickFormat(x, pos):
     return form(x)
 
@@ -197,10 +199,11 @@ def setupText(initialWealth, initialFlow, growthFlow, timeHorizon, bondShare0, b
     # text output explaining portfolio weights
     # for example 33% American: S&P 500 and 67% International: MSCI EAFE
     usText = 'Stocks: ' + percent(1 - intlShare) + ' American: S&P 500'
-    stockPortfolioText = usText + '\nand ' + percent(intlShare) + ' International: MSCI EAFE'
-    initPortfolioText = 'Portfolio: Stocks and US investment-grade bonds\n'
-    bondPortfolioText = 'From ' + percent(1 - bondShare0) + ' Stocks ' + percent(bondShare0) + ' Bonds\nTo ' + percent(1 - bondShare1) + ' Stocks ' + percent(bondShare1) + ' Bonds\n'
-    portfolioText = initPortfolioText + bondPortfolioText + stockPortfolioText
+    stockText = usText + '\nand ' + percent(intlShare) + ' International: MSCI EAFE'
+    initText = 'Portfolio: Stocks and US investment-grade bonds\n'
+    startText = 'At the start: ' + percent(1 - bondShare0) + ' Stocks ' + percent(bondShare0) + ' Bonds\n'
+    endText = 'At the end: ' + percent(1 - bondShare1) + ' Stocks ' + percent(bondShare1) + ' Bonds\n'
+    portfolioText = initText + startText + endText + stockText
 
     # number of simulations, convert to string
     simText = str(NSIMS) + ' Monte Carlo simulations'
@@ -279,15 +282,16 @@ def output(initialW, initialFlow, growthFlow, timeHorizon, bondShare0, bondShare
             pathLabel = '0' + rankText + ' Gone Bust !!!'
         else: # this path ends with positive wealth
             pathLabel = form(endWealth) + rankText + ' returns: ' + percent(timeAvgRet[index])
-
-        plt.plot(times, paths[index], label = pathLabel)
+        plt.plot(times, paths[index], label = pathLabel) # plot this given path
 
     plt.gca().set_facecolor('ivory') # background plot color
     plt.xlabel('Years') # label of the X-axis, for time
 
-    # make vertical lines selected years
-    ticks = allTicks(timeHorizon)
-    plt.xticks(ticks)
+    ticks = allTicks(timeHorizon) # make vertical lines selected years
+    plt.xticks(ticks) # this uses the x-axis for these vertical lines
+
+    # and for the y-axis, we format it according to the K, M, B format
+    # using the function 'form' and 'tickFormat' above
     plt.gca().yaxis.set_major_formatter(FuncFormatter(tickFormat))
     plt.title('Wealth Plot') # title of the entire figure
 
@@ -300,11 +304,12 @@ def output(initialW, initialFlow, growthFlow, timeHorizon, bondShare0, bondShare
     plt.savefig(outputName, bbox_inches = 'tight')
     plt.close()
 
-# main landing page
+# main landing page for the full version of the simulator
 @app.route('/')
 def mainPage():
     return render_template("main_page.html")
 
+# simplified simulator page with only a few main options available
 @app.route('/easy')
 def easyPage():
     return render_template("easy_page.html")
@@ -315,8 +320,9 @@ def easyPage():
 def computeDeep():
 
     # initial and terminal share of bonds in portfolio, converted from %
-    bond0 = float(request.form['bond0'])*0.01
-    bond1 = float(request.form['bond1'])*0.01
+    bond0 = float(request.form['bond0'])*0.01 # initial
+    bond1 = float(request.form['bond1'])*0.01 # terminal
+
     # share of international among stocks, converted from %
     intl = float(request.form['intl'])*0.01
 
@@ -326,7 +332,9 @@ def computeDeep():
 
     # Do you withdraw = '-1' or contribute = '+1' annually?
     action = int(request.form.get('action'))
-    # Do you annually increase = '+1' or decrease = '-1' these amounts?
+
+    # Do you annually increase = '+1' or decrease = '-1' these amounts
+    # of withdrawals and contributions?
     change = int(request.form.get('change'))
 
     # First year contributions or withdrawals
@@ -340,75 +348,103 @@ def computeDeep():
     # the response page after clicking Submit, with this PNG picture
     return render_template('response_page.html')
 
+# main function executing when click Submit on the
+# simplified simulator page, redirects to /fast
 @app.route('/fast', methods=["POST"])
 def computeEasy():
 
+    # This input shows risk tolerance of the person
     Risk = int(request.form.get('risk'))
-    if Risk == 1:
-        intl = 0.4
-    if Risk == 0:
-        intl = 0.3
-    if Risk == -1:
-        intl = 0.2
 
+    # How much invested in international stocks depending on risk tolerance
+    # Higher risk tolerance means higher proportion of international stocks
+    if Risk == 1: # High risk tolerance
+        intl = 0.4 # 60% USA, 40% international
+
+    if Risk == 0: # Medium risk tolerance
+        intl = 0.3 # 70% USA, 30% international
+
+    if Risk == -1: # Low risk tolerance
+        intl = 0.2 # 80% USA, 20% international
+
+    # overall amount of initial or monthly contributions or withdrawals
     amount = float(request.form['amount'])
+
+    # What do you need this investment for?
     Goal = int(request.form.get('goal'))
+
+    # Lump-sum investing:
+    # initial investment and then no contributions until retirement
     if Goal == 0:
         initialWealth = amount
-        initialFlow = 0
-        growthFlow = 0
-        if Risk == 1:
-            bond0 = 0.1
-            bond1 = 0.1
-        if Risk == 0:
-            bond0 = 0.1
-            bond1 = 0.4
-        if Risk == -1:
-            bond0 = 0.4
-            bond1 = 0.4
+        initialFlow = 0 # no initial contributions
+        growthFlow = 0 # no change in contributions
+
+        # Choosing the initial and final split stocks/bonds
+        # depending on risk tolerance
+        if Risk == 1: # high risk tolerance
+            bond0 = 0.1 # initial split 90/10
+            bond1 = 0.1 # terminal split 90/10
+
+        if Risk == 0: # medium risk tolerance
+            bond0 = 0.1 # initial split 90/10
+            bond1 = 0.4 # terminal split 60/40
+
+        if Risk == -1: # low risk tolerance
+            bond0 = 0.4 # initial split 60/40
+            bond1 = 0.4 # and terminal split is also 60/40
+
+    # Regular savings
+    # Start with zero but every year contribute something
+    # Annual contribution is nominal but grows 3% each year
     if Goal == 1:
         initialWealth = 0
         initialFlow = amount
-        growthFlow = 0.04
-        if Risk == 1:
-            bond0 = 0.1
-            bond1 = 0.1
-        if Risk == 0:
-            bond0 = 0.1
-            bond1 = 0.4
-        if Risk == -1:
-            bond0 = 0.4
-            bond1 = 0.4
+
+        # We chose this arbitrarily, compare with 3% historical inflation
+        growthFlow = 0.03
+
+        if Risk == 1: # high risk tolerance
+            bond0 = 0.1 # initial split 90/10
+            bond1 = 0.1 # terminal split 90/10
+
+        if Risk == 0: # medium risk tolerance
+            bond0 = 0.1 # initial split 90/10
+            bond1 = 0.4 # terminal split 60/40
+
+        if Risk == -1: # low risk tolerance
+            bond0 = 0.4 # initial split 60/40
+            bond1 = 0.4 # and terminal split is also 60/40
+
+    # Retirement living
+    # Contribute nothing, start with certain capital
+    # and withdraw fixed amount each year
+    # This amount is 4% of the initial wealth (celebrated 4% rule)
+    # and grows 4% in nominal terms each year
+    # Compare with 3% historical inflation
     if Goal == -1:
         initialWealth = amount
-        initialFlow = -0.04*amount
-        growthFlow = 0.05
-        if Risk == 1:
-            bond0 = 0.4
-            bond1 = 0.4
-        if Risk == 0:
-            bond0 = 0.6
-            bond1 = 0.6
-        if Risk == -1:
+        initialFlow = -0.04*amount # Negative flow: annual withdrawals
+        growthFlow = 0.04 # Growth 4% each year
+
+        # What is the stock/bond split depending on risk tolerance?
+        if Risk == 1: # High risk tolerance
+            bond0 = 0.4 # initial split 60/40
+            bond1 = 0.6 # final split 40/60
+
+        if Risk == 0: # Medium risk tolerance
+            bond0 = 0.4 # initial split 60/40
+            bond1 = 0.8 # final split 20/80
+
+        if Risk == -1: # Low risk tolerance: constant split 20/80
             bond0 = 0.8
             bond1 = 0.8
-    if Goal == 2:
-        initialWealth = amount
-        initialFlow = 0
-        growthFlow = 0
-        if Risk == 1:
-            bond0 = 0.1
-            bond1 = 0.1
-        if Risk == 0:
-            bond0 = 0.4
-            bond1 = 0.4
-        if Risk == -1:
-            bond0 = 0.7
-            bond1 = 0.7
+
     # number of years and initial wealth for simulation
     nYears = int(request.form['years'])
 
     # Draw the PNG picture with simulation results and graphs
     output(initialWealth, initialFlow, growthFlow, nYears, bond0, bond1, intl)
+
     # the response page after clicking Submit, with this PNG picture
     return render_template('response_page.html')
