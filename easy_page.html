@@ -5,8 +5,15 @@
 </head>
 <body>
     <font face = "arial">
-    <h2 align = "center"> Simplified Simulator <a href = "https://my-finance.org/2025/06/10/new-simulator/">Explained </a> &nbsp;
-     </h2>
+   <h2 align = "center">
+    Simplified Financial Simulator by
+    <a href = "https://asarantsev.github.io/WebArchive/">Andrey Sarantsev</a>
+    </h2>
+    <h3 align = "center">
+    <a href = "https://my-finance.org/2025/06/18/simplified-simulator-version/">Explanation</a> &nbsp;
+    <a href = "https://my-finance.org/2025/06/18/disclaimer/"> Disclaimer</a> &nbsp;
+    <a href = "{{url_for('mainPage')}}"> Complete Version </a>
+    </h3>
     <div> <font size = "+2"> <form action="{{ url_for('computeEasy')}}" method="POST">
         <p align = "center">
             <label for = 'risk'> Your Behavior </label>
@@ -21,8 +28,7 @@
             <select name = 'goal' style = "height:30px;font-size:25px;background-color: HoneyDew;" required>
                 <option value = '0'> Lump-Sum Investing </option>
                 <option value = '1'> Regular Savings </option>
-                <option value = '-1'> Regular Spending </option>
-                <option value = '2'> Preserving Wealth </option>
+                <option value = '-1'> Retirement Spending </option>
             </select>
         </p>
         <p align = "center">
@@ -33,12 +39,6 @@
             <label for="years"> Time in Years </label>
                 <input type="number" name="years" value = "20" style = "height:30px;width:120px;font-size:25px; background-color: HoneyDew;" min = "0" max = "50" required>
         </p>
-        <p align = "center">
-            <input type="submit" style="height:40px;font-size:24pt;background-color: HoneyDew;" value = "Compute">
-        </p>
+        <p align = "center"> <input type="submit" style="height:40px;font-size:24pt;background-color: HoneyDew;" value = "Compute"> </p>
         </font> </form> </div>
-        <h2 align = "center">
-            <a href = "{{url_for('mainPage')}}"> Main Simulator </a>
-        </h2>
-</body>
-</html>
+        </body> </html>
