@@ -14,16 +14,16 @@
     <a href = "https://my-finance.org/2025/06/18/disclaimer/"> Disclaimer</a> &nbsp;
     <a href = "{{url_for('easyPage')}}"> Simplified Version </a>
     </h3>
+    <div align = "center"> <font size = "+2"> (1) USA stocks (2) Foreign stocks (3) USA corporate bonds </font> </div>
     <div> <font size = "+2"> <form action="{{ url_for('computeDeep')}}" method="POST">
         <p align = "center">
-            % of US Bonds in Portfolio
-            <label for = "bond0"> At start </label> <input type="number" name="bond0" value = 40
+            % of Bonds <label for = "bond0"> At start </label> <input type="number" name="bond0" value = 10
             style = "height:30px;width:90px;font-size:25px;background-color: HoneyDew;" min = "0" step = "1" max = "100" required>
             <label for = "bond1"> At end </label> <input type="number" name="bond1" value = 40
             style = "height:30px;width:90px;font-size:25px;background-color: HoneyDew;" min = "0" step = "1" max = "100" required>
         </p>
         <p align = "center">
-            <label for="intl"> % of International among Stocks </label>
+            <label for="intl"> % of Foreign among Stocks </label>
             <input type="number" name="intl" value = 25
             style = "height:30px;width:90px;font-size:25px;background-color: HoneyDew;" min = "0" step = "1" max = "100" required>
         </p>
@@ -53,11 +53,9 @@
             <label for="initWealth"> Initial Wealth </label>
             <input type="number" name="initWealth" value = 1000
             style = "height:30px;width:150px;font-size:25px;background-color: HoneyDew;" min = "0" step = "1" required>
-        </p>
-        <p align = "center">
-            <label for="years"> Time in Years </label>
+            &nbsp; <label for="years"> Time in Years </label>
                 <input type="number" name="years" value = "20"
-                style = "height:30px;width:120px;font-size:25px; background-color: HoneyDew;" min = "0" max = "50" required>
+                style = "height:30px;width:80px;font-size:25px; background-color: HoneyDew;" min = "0" max = "50" required>
         </p>
         <p align = "center">
             <input type="submit" style="height:40px;font-size:24pt;background-color: HoneyDew;" value = "Compute">
