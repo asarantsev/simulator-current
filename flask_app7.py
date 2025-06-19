@@ -198,24 +198,24 @@ def setupText(initialWealth, initialFlow, growthFlow, timeHorizon, bondShare0, b
 
     # text output explaining portfolio weights
     # for example 33% American: S&P 500 and 67% International: MSCI EAFE
+    # At the start, 60% stocks and 40% bonds, at the end, 90% stocks and 10% bonds
     usText = 'Stocks: ' + percent(1 - intlShare) + ' American: S&P 500'
-    stockText = usText + '\nand ' + percent(intlShare) + ' International: MSCI EAFE'
-    initText = 'Portfolio: Stocks and US investment-grade bonds\n'
-    startText = 'At the start: ' + percent(1 - bondShare0) + ' Stocks ' + percent(bondShare0) + ' Bonds\n'
-    endText = 'At the end: ' + percent(1 - bondShare1) + ' Stocks ' + percent(bondShare1) + ' Bonds\n'
-    portfolioText = initText + startText + endText + stockText
+    intlText = 'and ' + percent(intlShare) + ' International: MSCI EAFE'
+    initText = 'Portfolio: Stocks and USA corporate bonds'
+    startText = 'At the start: ' + percent(1 - bondShare0) + ' Stocks ' + percent(bondShare0) + ' Bonds'
+    endText = 'At the end: ' + percent(1 - bondShare1) + ' Stocks ' + percent(bondShare1) + ' Bonds'
 
     # number of simulations, convert to string
     simText = str(NSIMS) + ' Monte Carlo simulations'
 
     # number of years in time horizon
-    timeHorizonText = 'Time Horizon: ' + str(timeHorizon) + ' years'
+    timeText = 'Time Horizon: ' + str(timeHorizon) + ' years'
 
     # initial wealth
     initWealthText = 'Initial Wealth ' + form(initialWealth)
 
     # return all these texts combined
-    texts = [simText, portfolioText, timeHorizonText, initWealthText, flowText]
+    texts = [simText, usText, intlText, initText, startText, endText, timeText, initWealthText, flowText]
 
     # combine all these texts and return combined text
     SetupText = 'SETUP: '
@@ -297,7 +297,7 @@ def output(initialW, initialFlow, growthFlow, timeHorizon, bondShare0, bondShare
 
     # properties of legend: location relative to the anchor above
     # font size and background color
-    plt.legend(bbox_to_anchor=(1, 1.04), loc='upper left', prop={'size': 14}, facecolor = 'azure')
+    plt.legend(bbox_to_anchor=(1, 1.1), loc='upper left', prop={'size': 14}, facecolor = 'azure')
     plt.grid(True) # make vertical and horizontal grid
 
     # save to folder 'static' to present in output page below
