@@ -428,17 +428,17 @@ def computeEasy():
         growthFlow = 0.04 # Growth 4% each year
 
         # What is the stock/bond split depending on risk tolerance?
-        if Risk == 1: # High risk tolerance
-            bond0 = 0.4 # initial split 60/40
-            bond1 = 0.6 # final split 40/60
+        if Risk == 1: # High risk tolerance, constant split 90/10
+            bond0 = 0.1
+            bond1 = 0.1
 
         if Risk == 0: # Medium risk tolerance
             bond0 = 0.4 # initial split 60/40
-            bond1 = 0.8 # final split 20/80
+            bond1 = 0.1 # final split 90/10
 
-        if Risk == -1: # Low risk tolerance: constant split 20/80
-            bond0 = 0.8
-            bond1 = 0.8
+        if Risk == -1: # Low risk tolerance: constant split 60/40
+            bond0 = 0.4
+            bond1 = 0.4
 
     # number of years and initial wealth for simulation
     nYears = int(request.form['years'])
