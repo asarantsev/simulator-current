@@ -15,7 +15,7 @@ overall.xlsx MAIN DATA FILE
 
 validation.py FITTING MODEL
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 UPDATE: June 11, https://my-finance.org/2025/06/10/new-simulator/
 
@@ -29,7 +29,7 @@ overall.xlsx MAIN DATA FILE
 
 validation.py FITTING MODEL
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Old version of the simulator, May 30
 
