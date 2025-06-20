@@ -53,8 +53,8 @@ def simReturns(initVol, initRate, nYears, bondPstart, bondPend, intlP):
     # initializing array simulations
     simLVol = np.zeros((NSIMS, nYears + 1))
     simLVol[:, 0] = np.log(initVol) * np.ones(NSIMS)
-    simRate = np.zeros((NSIMS, nYears + 1))
-    simRate[:, 0] = initRate * np.ones(NSIMS)
+    simLRate = np.zeros((NSIMS, nYears + 1))
+    simLRate[:, 0] = np.log(initRate) * np.ones(NSIMS)
     simUS = np.zeros((NSIMS, nYears))
     simIntl = np.zeros((NSIMS, nYears))
     simBond = np.zeros((NSIMS, nYears))
@@ -72,8 +72,9 @@ def simReturns(initVol, initRate, nYears, bondPstart, bondPend, intlP):
     # simulate log volatility and rate as autoregression
     for t in range(nYears):
         simLVol[:, t + 1] = alpha * np.ones(NSIMS) + beta * simLVol[:, t] + noiseVol[:, t]
-        simRate[:, t + 1] = gamma * np.ones(NSIMS) + theta * simRate[:, t] + noiseRate[:, t]
+        simLRate[:, t + 1] = gamma * np.ones(NSIMS) + theta * simLRate[:, t] + noiseRate[:, t]
 
+    simRate = np.exp(simLRate)
     simD = simRate[:, 1:] - simRate[:, :-1] # one-year change in simulated rate
     simVol = np.exp(simLVol) # from log volatility to volatility
 
