@@ -1,9 +1,11 @@
 # simulator-current
 Web site for the simulator: https://asarantsev.pythonanywhere.com/
 
+UPDATE: June 20, corrected a misprint in flask_app7.py
+
 UPDATE: June 18, https://my-finance.org/2025/06/18/updated-simulator-for-rate-and-volatility/
 
-flask-app7.py BACKEND
+flask_app7.py BACKEND
 
 main_page7.html FRONTEND (home page)
 
