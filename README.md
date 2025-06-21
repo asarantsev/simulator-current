@@ -1,6 +1,8 @@
 # simulator-current
 Web site for the simulator: https://asarantsev.pythonanywhere.com/
 
+UPDATE: June 20, uploaded simKDE.py which simulates NSIMS * nYears data of multivariate innovations
+
 UPDATE: June 20, corrected a misprint in flask_app7.py
 
 UPDATE: June 18, https://my-finance.org/2025/06/18/updated-simulator-for-rate-and-volatility/
