@@ -7,6 +7,8 @@ UPDATE: June 20, uploaded simKDE.py which simulates (NSIMS, nYears) data of mult
 
 The new Python file which uses this method of simulation of innovations is flask_app8.py
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 UPDATE: June 20, corrected a misprint in flask_app7.py
 
 UPDATE: June 18, https://my-finance.org/2025/06/18/updated-simulator-for-rate-and-volatility/
