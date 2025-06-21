@@ -1,7 +1,7 @@
 # simulator-current
 Web site for the simulator: https://asarantsev.pythonanywhere.com/
 
-UPDATE: June 20, uploaded simKDE.py which simulates NSIMS * nYears data of multivariate innovations
+UPDATE: June 20, uploaded simKDE.py which simulates NSIMS * nYears data of multivariate innovations. Added innovations.xlsx for original values of innovations and filled.xlsx for imputed values, so all five series in filled.xlsx have size 97. This imputation is done using linear regression with uniformly sampled regression residuals, see innovations.py. This Python code file reads innovations.xlsx and writes filled.xlsx. 
 
 UPDATE: June 20, corrected a misprint in flask_app7.py
 
