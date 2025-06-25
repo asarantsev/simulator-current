@@ -143,7 +143,7 @@ def simReturns(initVol, initRate, nYears, bondPstart, bondPend, intlP):
 def simWealth(initVol, initRate, initialW, initialFlow, growthFlow, nYears, bondShare0, bondShare1, intlShare):
 
     #simulate returns of this portfolio
-    simUS, simRet = simReturns(initVol, initRate, nYears, bondShare0, bondShare1, intlShare)
+    simRet = simReturns(initVol, initRate, nYears, bondShare0, bondShare1, intlShare)
     pathData = np.mean(simRet, axis = 1) # average arithmetic returns over each simulation
     wealth = np.zeros((NSIMS, nYears + 1)) # create an array for wealth simulation
     wealth[:, 0] = np.ones(NSIMS) * initialW # initial wealth year 0 initialize
